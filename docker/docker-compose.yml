@@ -1,0 +1,22 @@
+# change the postgres env config accoriding to you or leave this as it is i have place this here for simplicity
+services:
+  postgres:
+    image: postgres:latest
+    container_name: multi_edit_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=multi-edit-api
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - multi_edit_network
+
+volumes:
+  postgres_data:
+
+networks:
+  multi_edit_network:
+    driver: bridge

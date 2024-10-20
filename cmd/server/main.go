@@ -1,29 +1,26 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
-	"github.com/Abhi-Bohora/multi-edit-api/config"
+	"github.com/Abhi-Bohora/multi-edit-api/internal/config"
+	"github.com/Abhi-Bohora/multi-edit-api/internal/database"
 )
 
 func main(){
-	config, err := config.LoadConfig()
+	dbConfig, err := config.LoadConfig()
 	if err != nil {
-        log.Fatal("load config err:", err)
-    }
+		log.Fatal("Failed to load database config: %w", err)
+	}
 
-	fmt.Println("Database Host:", config.Database.Host)
-    fmt.Println("Server Port:", config.Server.Port)
-	fmt.Println("Database Port:", config.Database.Port)
+	db, err := database.NewDatabase(dbConfig)
+	if err != nil {
+		log.Fatal("Failed to connect to a database: %w", err)
+	}
 
-	connectToDatabase(config)
-}
-
-func connectToDatabase(cfg *config.Config) {
-    dbHost := cfg.Database.Host
-    dbPort := cfg.Database.Port
-    dbUser := cfg.Database.User
-    // just printing
-    fmt.Printf("Connecting to database at %s:%s as user %s\n", dbHost, dbPort, dbUser)
+	//if connection is successfull than we will automigrate the models
+	log.Println("Database connection successfull")
+	if err := db.AutoMigrate(); err != nil {
+		log.Fatalf("Failed to run migrations: %v", err)
+	}
 }
