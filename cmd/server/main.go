@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Abhi-Bohora/mult-edit-api/config"
+	"github.com/Abhi-Bohora/multi-edit-api/config"
 )
 
 func main(){
@@ -15,6 +15,7 @@ func main(){
 
 	fmt.Println("Database Host:", config.Database.Host)
     fmt.Println("Server Port:", config.Server.Port)
+	fmt.Println("Database Port:", config.Database.Port)
 
 	connectToDatabase(config)
 }

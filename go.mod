@@ -1,4 +1,4 @@
-module github.com/Abhi-Bohora/mult-edit-api
+module github.com/Abhi-Bohora/multi-edit-api
 
 go 1.22.5
 
