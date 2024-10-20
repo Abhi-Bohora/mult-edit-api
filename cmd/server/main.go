@@ -5,6 +5,7 @@ import (
 
 	"github.com/Abhi-Bohora/multi-edit-api/internal/config"
 	"github.com/Abhi-Bohora/multi-edit-api/internal/database"
+	"github.com/Abhi-Bohora/multi-edit-api/internal/seeder"
 )
 
 func main(){
@@ -23,4 +24,12 @@ func main(){
 	if err := db.AutoMigrate(); err != nil {
 		log.Fatalf("Failed to run migrations: %v", err)
 	}
+
+	s := seeder.NewSeeder(db.DB)
+
+	if err := s.SeedAll(); err != nil {
+		log.Fatalf("Failed to seed database: %v", err)
+	}
+
+	log.Println("Database seeding completed successfully!")
 }
